@@ -1,0 +1,29 @@
+name: uncensored-ai-chat
+
+services:
+  open-webui:
+    # Release tag, never a floating latest/main tag. Update deliberately after review.
+    image: ghcr.io/open-webui/open-webui:v0.11.3
+    container_name: uncensored-ai-open-webui
+    ports:
+      - "127.0.0.1:${OPEN_WEBUI_PORT}:8080"
+    environment:
+      WEBUI_NAME: Private AI Chat
+      WEBUI_AUTH: "True"
+      WEBUI_URL: "http://127.0.0.1:${OPEN_WEBUI_PORT}"
+      WEBUI_SECRET_KEY: "${WEBUI_SECRET_KEY}"
+      # Open WebUI v0.11 persists the plural provider settings on first run.
+      OPENAI_API_BASE_URLS: "http://host.docker.internal:${LOCAL_TUNNEL_PORT}/v1"
+      OPENAI_API_KEYS: "${MODEL_API_KEY}"
+      ENABLE_OLLAMA_API: "False"
+      ENABLE_OPENAI_API_PASSTHROUGH: "False"
+      ENABLE_WEB_SEARCH: "False"
+      DEFAULT_USER_ROLE: pending
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - uncensored-ai-open-webui-data:/app/backend/data
+    restart: "no"
+
+volumes:
+  uncensored-ai-open-webui-data:

@@ -1,0 +1,16 @@
+# Default: normalise text to LF everywhere.
+* text=auto eol=lf
+
+# Scripts run on Linux servers: keep LF line endings even when cloned on Windows.
+*.sh text eol=lf
+*.env text eol=lf
+*.example text eol=lf
+*.service text eol=lf
+*.template text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.md text eol=lf
+
+# The Windows launcher is PowerShell. Keep LF: chat.ps1 sends an embedded bash
+# snippet over SSH, and carriage returns would break it.
+*.ps1 text eol=lf

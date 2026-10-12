@@ -1,0 +1,23 @@
+[Unit]
+Description=Uncensored AI model and Open WebUI readiness guardian
+Wants=network-online.target docker.service
+After=network-online.target docker.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=@SERVICE_USER@
+Group=@SERVICE_GROUP@
+SupplementaryGroups=docker
+WorkingDirectory=@PROJECT_ROOT@
+Environment=HOME=@SERVICE_HOME@
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStart=@RUNTIME_ROOT@/bin/keep-stack-ready.sh @PROFILE_NAME@ --publish-ui
+ExecStop=@RUNTIME_ROOT@/bin/stop-stack.sh @PROFILE_NAME@
+Restart=always
+RestartSec=15
+TimeoutStartSec=20min
+TimeoutStopSec=2min
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,35 @@
+name: uncensored-ai-server-chat
+
+services:
+  open-webui:
+    # Review and deliberately update this pinned release tag; never use latest/main.
+    image: "${OPEN_WEBUI_IMAGE}"
+    container_name: uncensored-ai-server-openwebui
+    # The model is intentionally bound to host loopback, so the UI shares the
+    # host network and reaches it at 127.0.0.1 without publishing port 8000.
+    network_mode: host
+    environment:
+      PORT: "${CHAT_UI_PORT}"
+      WEBUI_NAME: "${CHAT_UI_BRAND_NAME}"
+      WEBUI_AUTH: "True"
+      WEBUI_SECRET_KEY: "${WEBUI_SECRET_KEY}"
+      WEBUI_ADMIN_EMAIL: "${CHAT_UI_ADMIN_EMAIL}"
+      WEBUI_ADMIN_PASSWORD: "${CHAT_UI_ADMIN_PASSWORD}"
+      WEBUI_ADMIN_NAME: "${CHAT_UI_ADMIN_NAME}"
+      ENABLE_SIGNUP: "False"
+      DEFAULT_USER_ROLE: pending
+      # Open WebUI v0.11 persists the plural provider settings on first run.
+      # Keep the model API on the server's loopback; port 8000 is never published.
+      OPENAI_API_BASE_URLS: "http://127.0.0.1:8000/v1"
+      OPENAI_API_KEYS: "${MODEL_API_KEY}"
+      ENABLE_OLLAMA_API: "False"
+      ENABLE_OPENAI_API_PASSTHROUGH: "False"
+      ENABLE_WEB_SEARCH: "False"
+      OFFLINE_MODE: "True"
+      SAFE_MODE: "True"
+    volumes:
+      - uncensored-ai-server-openwebui-data:/app/backend/data
+    restart: unless-stopped
+
+volumes:
+  uncensored-ai-server-openwebui-data:
