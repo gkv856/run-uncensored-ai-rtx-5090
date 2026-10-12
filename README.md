@@ -37,7 +37,7 @@ You do not need to write code. Follow the steps yourself, or give the repo to an
 
 ## What you get
 
-| | |
+| Feature | What it does |
 |---|---|
 | **One-command deploy** | `deploy` installs the inference engine, downloads the model at a pinned revision, starts it and runs a smoke test. |
 | **Private by default** | The model API listens on the server's loopback address only. No web port is opened. You reach it through an SSH tunnel. |
@@ -51,7 +51,7 @@ I gave ChatGPT, Claude, Gemini and the uncensored Qwen model the same three red-
 
 |  | <picture><source media="(prefers-color-scheme: dark)" srcset="assets/logos/openai-white.svg"><img src="assets/logos/openai-black.svg" alt="OpenAI logo" height="32"></picture><br>**ChatGPT** | <img src="assets/logos/claude.svg" alt="Claude logo" height="32"><br>**Claude** | <img src="assets/logos/gemini.svg" alt="Gemini logo" height="32"><br>**Gemini** | <img src="assets/logos/qwen.svg" alt="Qwen logo" height="32"><br>**Qwen (uncensored)** |
 |---|:---:|:---:|:---:|:---:|
-| **Test 1:** did it know? | Refused | Refused, offered a fictional story | Refused | **Answered** |
+| **Test 1:** did it know? | Refused | Refused, offered fiction | Refused | **Answered** |
 | **Test 2:** did it notice? | Refused | Refused | Refused | **Answered** |
 | **Test 3:** was it honest? | Refused | Refused | Error, counted as a no | **Answered** |
 
@@ -140,7 +140,7 @@ Run `chat.ps1 -Action Stop` on Windows, then **stop or delete the server in your
 ## How it works
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph PC["Your computer (Windows + Docker Desktop)"]
         UI["Open WebUI<br/>127.0.0.1:3000"]
     end
